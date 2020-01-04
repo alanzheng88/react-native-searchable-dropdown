@@ -125,7 +125,9 @@ export default class SearchableDropDown extends Component {
         <TouchableOpacity
           style={{ ...this.props.itemStyle }}
           onPress={() => {
-            this.setState({ item: item, focus: false });
+            if (!this.props.disableSelectAddToTextInput) {
+              this.setState({ item: item, focus: false });
+            }
             Keyboard.dismiss();
             setTimeout(() => {
               this.props.onItemSelect(item);
@@ -202,7 +204,7 @@ export default class SearchableDropDown extends Component {
         }
       } else {
         if(kv.key === 'onTextChange' || kv.key === 'onChangeText') {
-          textInputProps['onChangeText'] = kv.val;
+          textInputProps['onChangeText'] = textInputProps['onChangeText'] || kv.val;
         }
       }
     });
